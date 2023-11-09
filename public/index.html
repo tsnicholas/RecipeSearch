@@ -4,12 +4,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
         <title>Recipe Search</title>
         <link rel="stylesheet" href="../src/recipeSearch.css">
+        <!-- This will stop the console from giving an error for not having an icon. -->
         <link rel="shortcut icon" href="#">
     </head>
     <body>
         <h1>Recipe Search</h1>
-        <label for="searchbar">Search:</label>
-        <input type="text" name="searchbar" id="searchbar"/>
+        <div id="searchBar">
+            <input title="searchInput" type="text" name="search input" id="searchInput"/>
+            <button type="button" id="searchButton">Search</button>
+        </div>
+        <div id="searchResult"></div>
         <script src="../dist/bundle.js" type="module"></script>
     </body>
 </html>

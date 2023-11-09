@@ -47,5 +47,12 @@ h1 {
     flex-direction: column;
     text-align: center;
     width: 60vw;
-    height: 450px;
+}
+
+.infoContainer > ol {
+    font-size: 8pt;
+}
+
+.infoContainer > p {
+    font-size: 10pt;
 }

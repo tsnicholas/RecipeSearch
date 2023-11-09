@@ -96,5 +96,19 @@ function createInfo(recipe) {
     var name = document.createElement("h2");
     name.innerText = recipe.name;
     container.appendChild(name);
+    var list = document.createElement("ol");
+    createIngredientList(recipe, list);
+    container.appendChild(list);
+    var instructions = document.createElement("p");
+    instructions.innerText = recipe.instructions;
+    container.appendChild(instructions);
     return container;
+}
+
+function createIngredientList(recipe, listNode) {
+    for(var ingredient of recipe.ingredients) {
+        var listItem = document.createElement("li");
+        listItem.innerText = ingredient;
+        listNode.appendChild(listItem);
+    }
 }

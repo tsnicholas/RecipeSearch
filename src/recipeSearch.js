@@ -11,6 +11,7 @@ async function search() {
     var mealIds = jsonpath.query(queryResult, "$.meals..idMeal");
     var recipes = await getRecipes(mealIds);
     console.log(recipes[0].ingredients);
+    displayResults(recipes);
 }
 
 async function getJSON(url, data) {
@@ -33,7 +34,6 @@ async function getRecipes(mealIds) {
     for(var mealId of mealIds) {
         var mealJson = await getJSON('https://www.themealdb.com/api/json/v1/1/lookup.php', {i: mealId});
         var meal = mealJson.meals[0];
-        console.log(JSON.stringify(meal));
         var recipeData = {
             name: meal.strMeal,
             thumbnail: meal.strMealThumb,
@@ -48,12 +48,53 @@ async function getRecipes(mealIds) {
 function getIngredients(mealJson) {
     var ingredients = [];
     for(let i = 1; i <= 20; i++) {
-        var ingredient = JSON.stringify(jsonpath.query(mealJson, `$.strIngredient${i}`));
-        var measure = JSON.stringify(jsonpath.query(mealJson, `$.strMeasure${i}`));
+        var ingredient = convertToString(jsonpath.query(mealJson, `$.strIngredient${i}`));
+        var measure = convertToString(jsonpath.query(mealJson, `$.strMeasure${i}`));
         if(measure === "" || measure === null || ingredient === "" || ingredient === null) {
             break;
         }
         ingredients.push(`${measure} ${ingredient}`);
     }
     return ingredients;
+}
+
+function convertToString(json) {
+    var output = JSON.stringify(json);
+    return output.substring(2, output.length - 2);
+}
+
+function displayResults(recipes) {
+    var display = $("#recipeSection")[0];
+    removeAllChildren(display);
+    for(var recipe of recipes) {
+        var recipeContainer = document.createElement("div");
+        recipeContainer.classList.add("recipeContainer");
+        recipeContainer.setAttribute("id", "recipeContainer");
+        recipeContainer.appendChild(createThumbnail(recipe));
+        recipeContainer.appendChild(createInfo(recipe));
+        display.appendChild(recipeContainer);
+    }
+}
+
+function removeAllChildren(parent) {
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function createThumbnail(recipe) {
+    var image = document.createElement("img");
+    image.setAttribute("src", recipe.thumbnail);
+    image.setAttribute("alt", recipe.name);
+    image.classList.add("thumbnail");
+    return image;
+}
+
+function createInfo(recipe) {
+    var container = document.createElement("div");
+    container.classList.add("infoContainer");
+    var name = document.createElement("h2");
+    name.innerText = recipe.name;
+    container.appendChild(name);
+    return container;
 }

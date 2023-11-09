@@ -1,3 +1,10 @@
+body {
+    background-size: cover;
+    background: radial-gradient(silver, grey);
+    margin: 15px;
+    padding-bottom: 100vh;
+}
+
 h1 {
     text-align: center;
 }
@@ -7,8 +14,38 @@ h1 {
     flex-direction: row;
     justify-content: center;
     align-content: center;
+    padding-bottom: 20px;
 }
 
 #searchInput {
     width: 500px;
+}
+
+#recipeSection {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.recipeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-start;
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    padding: 20px 0px 20px 0px;
+}
+
+.thumbnail {
+    height: 450px;
+    width: 30vw;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 60vw;
+    height: 450px;
 }
